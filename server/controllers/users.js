@@ -1,7 +1,7 @@
 /* eslint no-console: 0 */
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { User } = require('../model');
+const { User } = require('../models/User');
 const SECRET_KEY = 'supercalifragilisticexpialidocious';
 
 const signup = async (req, res) => {

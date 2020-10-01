@@ -1,5 +1,6 @@
 /* eslint no-console: 0 */
-const { Transaction, User } = require('../model');
+const { Transaction } = require('../models/Transaction');
+const { User } = require('../models/User');
 
 const getHistory = async (req, res) => {
   try {

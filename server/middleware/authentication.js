@@ -1,6 +1,6 @@
 /* eslint no-console: 0 */
 const jwt = require('jsonwebtoken');
-const { User } = require('../model');
+const { User } = require('../models/User');
 const SECRET_KEY = 'supercalifragilisticexpialidocious';
 
 const authenticateMe = async (req, res, next) => {
