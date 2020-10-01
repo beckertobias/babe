@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 
 const app = express();
 const router = require('./router');
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 const config = {
   origin: 'http://localhost:3000',
