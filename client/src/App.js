@@ -12,7 +12,20 @@ import TransactionService from './services/TransactionService';
 import UserService from './services/UserService';
 import authentication from './authentication';
 
-function App() {
+//AUTH
+import withFirebaseAuth from 'react-with-firebase-auth';
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+import firebaseConfig from './firebaseConfig';
+
+const firebaseApp = firebase.initializeApp(firebaseConfig);
+
+const firebaseAppAuth = firebaseApp.auth();
+const providers = {
+  googleProvider: new firebase.auth.GoogleAuthProvider(),
+};
+
+function App(props) {
   // SET STATE
   const currentAuthentication = authentication.isAuthenticated();
   const [isAuthenticated, setIsAuthenticated] = useState(currentAuthentication);
@@ -31,6 +44,9 @@ function App() {
     overallLender: '',
   });
   const [isLoading, setIsLoading] = useState(false);
+
+  //AUTH
+  const { user, signOut, signInWithGoogle } = props;
 
   const retrieveUserInfo = async accessToken => {
     try {
@@ -84,31 +100,45 @@ function App() {
     isLoading,
     isAuthenticated,
   ]);
+  console.log(user);
 
   // LOAD MAIN PAGE LAYOUT
   return (
-    <main>
-      <Head />
-      <Header />
-      {isLoading ? (
-        <MainViewStatic></MainViewStatic>
-      ) : (
-        <PageContainer
-          summary={summary}
-          users={users}
-          setUsers={setUsers}
-          transactions={transactions}
-          setTransactions={setTransactions}
-          currency={currency}
-          setCurrency={setCurrency}
-          isAuthenticated={isAuthenticated}
-          setIsAuthenticated={setIsAuthenticated}
-          setIsLoading={setIsLoading}
-        />
-      )}
-      <Footer isAuthenticated={isAuthenticated} />
-    </main>
+    <div className="App">
+      <header className="App-header">
+        {user ? <p>Hello, {user.displayName}</p> : <p>Please sign in.</p>}
+        {user ? (
+          <button onClick={signOut}>Sign out</button>
+        ) : (
+          <button onClick={signInWithGoogle}>Sign in with Google</button>
+        )}
+      </header>
+    </div>
   );
+  // <main>
+  //   <Head />
+  //   <Header />
+  //   {isLoading ? (
+  //     <MainViewStatic></MainViewStatic>
+  //   ) : (
+  //     <PageContainer
+  //       summary={summary}
+  //       users={users}
+  //       setUsers={setUsers}
+  //       transactions={transactions}
+  //       setTransactions={setTransactions}
+  //       currency={currency}
+  //       setCurrency={setCurrency}
+  //       isAuthenticated={isAuthenticated}
+  //       setIsAuthenticated={setIsAuthenticated}
+  //       setIsLoading={setIsLoading}
+  //     />
+  //   )}
+  //   <Footer isAuthenticated={isAuthenticated} />
+  // </main>
 }
 
-export default App;
+export default withFirebaseAuth({
+  providers,
+  firebaseAppAuth,
+})(App);
