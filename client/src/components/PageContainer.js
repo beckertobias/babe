@@ -16,6 +16,7 @@ import Logout from '../pages/Logout';
 import SignUp from '../pages/SignUp';
 import Settings from '../pages/Settings';
 import About from '../pages/About';
+import GoogleSignUp from '../pages/GoogleSignUp';
 
 export default function PageContainer({
   users,
@@ -104,6 +105,11 @@ export default function PageContainer({
       />
       <Logout
         path="/logout"
+        setIsAuthenticated={setIsAuthenticated}
+        setIsLoading={setIsLoading}
+      />
+      <GoogleSignUp
+        path="/google-sign-up"
         setIsAuthenticated={setIsAuthenticated}
         setIsLoading={setIsLoading}
       />

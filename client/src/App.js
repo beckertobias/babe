@@ -12,10 +12,19 @@ import TransactionService from './services/TransactionService';
 import UserService from './services/UserService';
 import authentication from './authentication';
 
-// AUTH
-import { auth } from './firebase/config';
+//FIREBASE
+import * as firebase from 'firebase';
+import firebaseConfig from './firebase/config';
+
+//AUTH CONTEXT
+import AuthContext from './auth/auth';
+
+firebase.initializeApp(firebaseConfig);
 
 function App(props) {
+  //GOOGLE AUTH STATE
+  const [isLoggedIn, setLoggedIn] = useState(false);
+
   // SET STATE
   const currentAuthentication = authentication.isAuthenticated();
   const [isAuthenticated, setIsAuthenticated] = useState(currentAuthentication);
@@ -94,38 +103,30 @@ function App(props) {
 
   // LOAD MAIN PAGE LAYOUT
   return (
-    //   <div className="App">
-    //     <header className="App-header">
-    //       {user ? <p>Hello, {user.displayName}</p> : <p>Please sign in.</p>}
-    //       {user ? (
-    //         <button onClick={signOut}>Sign out</button>
-    //       ) : (
-    //         <button onClick={signInWithGoogle}>Sign in with Google</button>
-    //       )}
-    //     </header>
-    //   </div>
-    // );
-    <main>
-      <Head />
-      <Header />
-      {isLoading ? (
-        <MainViewStatic></MainViewStatic>
-      ) : (
-        <PageContainer
-          summary={summary}
-          users={users}
-          setUsers={setUsers}
-          transactions={transactions}
-          setTransactions={setTransactions}
-          currency={currency}
-          setCurrency={setCurrency}
-          isAuthenticated={isAuthenticated}
-          setIsAuthenticated={setIsAuthenticated}
-          setIsLoading={setIsLoading}
-        />
-      )}
-      <Footer isAuthenticated={isAuthenticated} />
-    </main>
+    <AuthContext.Provider value={{ isLoggedIn, setLoggedIn }}>
+      Is logged in? {JSON.stringify(isLoggedIn)}
+      <main>
+        <Head />
+        <Header />
+        {isLoading ? (
+          <MainViewStatic></MainViewStatic>
+        ) : (
+          <PageContainer
+            summary={summary}
+            users={users}
+            setUsers={setUsers}
+            transactions={transactions}
+            setTransactions={setTransactions}
+            currency={currency}
+            setCurrency={setCurrency}
+            isAuthenticated={isAuthenticated}
+            setIsAuthenticated={setIsAuthenticated}
+            setIsLoading={setIsLoading}
+          />
+        )}
+        <Footer isAuthenticated={isAuthenticated} />
+      </main>
+    </AuthContext.Provider>
   );
 }
 

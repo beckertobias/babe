@@ -1,13 +1,5 @@
-import { auth } from '../firebase/config';
+import React from 'react';
 
-export function signup(email, password, dob, address) {
-  return auth().createUserWithEmailAndPassword(email, password);
-}
+const AuthContext = React.createContext(null);
 
-export function signin(email, password) {
-  return auth().signInWithEmailAndPassword(email, password);
-}
-
-export function logout() {
-  return auth().signOut();
-}
+export default AuthContext;

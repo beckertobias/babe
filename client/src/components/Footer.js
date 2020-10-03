@@ -14,7 +14,7 @@ export default function Footer({ isAuthenticated }) {
       ) : (
         <React.Fragment>
           <Link to="/about">About</Link>
-          <Link to="/sign-up">Sign up</Link>
+          <Link to="/google-sign-up">Sign up</Link>
           <Link to="/login">Login</Link>
         </React.Fragment>
       )}
