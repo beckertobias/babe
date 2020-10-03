@@ -10,6 +10,7 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "emotion": "^10.0.27",
+    "jest-canvas-mock": "^2.3.0",
     "moment": "^2.29.0",
     "prettier": "^2.1.2",
     "react": "^16.13.1",
@@ -42,7 +43,9 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/dom": "^7.24.3",
     "eslint": "^7.9.0",
-    "eslint-plugin-react": "^7.21.1"
+    "eslint-plugin-react": "^7.21.1",
+    "jest": "^26.4.2"
   }
 }
