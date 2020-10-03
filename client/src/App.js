@@ -12,18 +12,8 @@ import TransactionService from './services/TransactionService';
 import UserService from './services/UserService';
 import authentication from './authentication';
 
-//AUTH
-import withFirebaseAuth from 'react-with-firebase-auth';
-import * as firebase from 'firebase/app';
-import 'firebase/auth';
-import firebaseConfig from './firebaseConfig';
-
-const firebaseApp = firebase.initializeApp(firebaseConfig);
-
-const firebaseAppAuth = firebaseApp.auth();
-const providers = {
-  googleProvider: new firebase.auth.GoogleAuthProvider(),
-};
+// AUTH
+import { auth } from './firebase/config';
 
 function App(props) {
   // SET STATE
@@ -104,41 +94,39 @@ function App(props) {
 
   // LOAD MAIN PAGE LAYOUT
   return (
-    <div className="App">
-      <header className="App-header">
-        {user ? <p>Hello, {user.displayName}</p> : <p>Please sign in.</p>}
-        {user ? (
-          <button onClick={signOut}>Sign out</button>
-        ) : (
-          <button onClick={signInWithGoogle}>Sign in with Google</button>
-        )}
-      </header>
-    </div>
+    //   <div className="App">
+    //     <header className="App-header">
+    //       {user ? <p>Hello, {user.displayName}</p> : <p>Please sign in.</p>}
+    //       {user ? (
+    //         <button onClick={signOut}>Sign out</button>
+    //       ) : (
+    //         <button onClick={signInWithGoogle}>Sign in with Google</button>
+    //       )}
+    //     </header>
+    //   </div>
+    // );
+    <main>
+      <Head />
+      <Header />
+      {isLoading ? (
+        <MainViewStatic></MainViewStatic>
+      ) : (
+        <PageContainer
+          summary={summary}
+          users={users}
+          setUsers={setUsers}
+          transactions={transactions}
+          setTransactions={setTransactions}
+          currency={currency}
+          setCurrency={setCurrency}
+          isAuthenticated={isAuthenticated}
+          setIsAuthenticated={setIsAuthenticated}
+          setIsLoading={setIsLoading}
+        />
+      )}
+      <Footer isAuthenticated={isAuthenticated} />
+    </main>
   );
-  // <main>
-  //   <Head />
-  //   <Header />
-  //   {isLoading ? (
-  //     <MainViewStatic></MainViewStatic>
-  //   ) : (
-  //     <PageContainer
-  //       summary={summary}
-  //       users={users}
-  //       setUsers={setUsers}
-  //       transactions={transactions}
-  //       setTransactions={setTransactions}
-  //       currency={currency}
-  //       setCurrency={setCurrency}
-  //       isAuthenticated={isAuthenticated}
-  //       setIsAuthenticated={setIsAuthenticated}
-  //       setIsLoading={setIsLoading}
-  //     />
-  //   )}
-  //   <Footer isAuthenticated={isAuthenticated} />
-  // </main>
 }
 
-export default withFirebaseAuth({
-  providers,
-  firebaseAppAuth,
-})(App);
+export default App;

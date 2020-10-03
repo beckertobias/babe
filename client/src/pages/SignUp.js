@@ -13,6 +13,9 @@ import {
 import UserService from '../services/UserService';
 import authentication from '../authentication';
 
+//AUTH
+import { signup } from '../auth/auth';
+
 const initialState = {
   email: '',
   password: '',
@@ -35,21 +38,28 @@ const SignUp = ({ setIsAuthenticated, setIsLoading }) => {
 
   const handleSubmit = async event => {
     event.preventDefault();
-    const { email, password, name, partner, currency, partnerEmail } = state;
-    const newUser = { email, password, name, partner, partnerEmail, currency };
+    const { email, password } = state;
     try {
-      const result = await UserService.signup(newUser);
-      const { accessToken } = result;
-      localStorage.setItem('accessToken', accessToken);
-      setIsAuthenticated(true);
-      setIsLoading(true);
-      authentication.login(() => navigate('/', { replace: true }));
+      await signup(email, password);
     } catch (error) {
-      alert(
-        `There is an account already registered with ${email}. Please use a different email address or log in.`,
-      );
-      setState(initialState);
+      console.log(error);
     }
+
+    // const { email, password, name, partner, currency, partnerEmail } = state;
+    // const newUser = { email, password, name, partner, partnerEmail, currency };
+    // try {
+    //   const result = await UserService.signup(newUser);
+    //   const { accessToken } = result;
+    //   localStorage.setItem('accessToken', accessToken);
+    //   setIsAuthenticated(true);
+    //   setIsLoading(true);
+    //   authentication.login(() => navigate('/', { replace: true }));
+    // } catch (error) {
+    //   alert(
+    //     `There is an account already registered with ${email}. Please use a different email address or log in.`,
+    //   );
+    //   setState(initialState);
+    // }
   };
 
   return (
