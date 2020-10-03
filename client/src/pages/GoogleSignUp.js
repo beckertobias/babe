@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import AuthContext from '../auth/auth';
 import * as firebase from 'firebase';
-//import { navigate } from '@reach/router';
+import { navigate } from '@reach/router';
 
 const GoogleSignUp = () => {
   const Auth = useContext(AuthContext);
@@ -18,12 +18,28 @@ const GoogleSignUp = () => {
           .signInWithPopup(provider)
           .then(result => {
             console.log(result);
-            console.log(result.additionalUserInfo.profile);
-            console.log(result.additionalUserInfo.profile.email);
-            console.log(result.additionalUserInfo.profile.family_name);
-            console.log(result.additionalUserInfo.profile.given_name);
+            // console.log(result.additionalUserInfo.profile);
+            // console.log(result.additionalUserInfo.profile.email);
+            // console.log(result.additionalUserInfo.profile.family_name);
+            // console.log(result.additionalUserInfo.profile.given_name);
             Auth.setLoggedIn(true);
+            navigate('/sign-up', {
+              state: {
+                email: result.additionalUserInfo.profile.email,
+                name: result.additionalUserInfo.profile.given_name,
+              },
+              replace: true,
+            });
           })
+          // .then(result => {
+          //   navigate('/sign-up', {
+          //     state: {
+          //       email: result.additionalUserInfo.profile.email,
+          //       name: result.additionalUserInfo.profile.given_name,
+          //     },
+          //     replace: true,
+          //   });
+          // })
           .catch(e => console.log(e));
       });
   };

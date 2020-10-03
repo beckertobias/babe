@@ -22,7 +22,13 @@ const initialState = {
   currency: '',
 };
 
-const SignUp = ({ setIsAuthenticated, setIsLoading }) => {
+const SignUp = ({ route }) => {
+  const { email } = route.params;
+
+  console.log(email);
+  // console.log(route.params);
+  // console.log(route.params);
+
   const [state, setState] = useState(initialState);
 
   const handleChange = event => {
@@ -34,29 +40,28 @@ const SignUp = ({ setIsAuthenticated, setIsLoading }) => {
   };
 
   const handleSubmit = async event => {
-    event.preventDefault();
-    // const { email, password } = state;
+    // event.preventDefault();
+    // // const { email, password } = state;
+    // // try {
+    // //   await signup(email, password);
+    // // } catch (error) {
+    // //   console.log(error);
+    // // }
+    // const { email, password, name, partner, currency, partnerEmail } = state;
+    // const newUser = { email, password, name, partner, partnerEmail, currency };
     // try {
-    //   await signup(email, password);
+    //   const result = await UserService.signup(newUser);
+    //   const { accessToken } = result;
+    //   localStorage.setItem('accessToken', accessToken);
+    //   setIsAuthenticated(true);
+    //   setIsLoading(true);
+    //   authentication.login(() => navigate('/', { replace: true }));
     // } catch (error) {
-    //   console.log(error);
+    //   alert(
+    //     `There is an account already registered with ${email}. Please use a different email address or log in.`,
+    //   );
+    //   setState(initialState);
     // }
-
-    const { email, password, name, partner, currency, partnerEmail } = state;
-    const newUser = { email, password, name, partner, partnerEmail, currency };
-    try {
-      const result = await UserService.signup(newUser);
-      const { accessToken } = result;
-      localStorage.setItem('accessToken', accessToken);
-      setIsAuthenticated(true);
-      setIsLoading(true);
-      authentication.login(() => navigate('/', { replace: true }));
-    } catch (error) {
-      alert(
-        `There is an account already registered with ${email}. Please use a different email address or log in.`,
-      );
-      setState(initialState);
-    }
   };
 
   return (
