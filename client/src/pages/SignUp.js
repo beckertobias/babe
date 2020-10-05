@@ -25,12 +25,10 @@ const initialState = {
   currency: '',
 };
 
-const SignUp = () => {
+const SignUp = ({ setIsAuthenticated, setIsLoading }) => {
   //REDUX
   const user = useSelector(state => state.user);
   const dispatch = useDispatch();
-
-  console.log(user);
 
   const [state, setState] = useState(initialState);
 
@@ -59,19 +57,19 @@ const SignUp = () => {
       currency,
     });
     const newUser = {
-      email: 'tobias@gmail.com',
-      name: 'fwefe',
-      password: '45678fghjku09onf4',
-      partnerEmail: 'wifejnf@web.de',
-      partner: 'tyhjnhjuik',
-      currency: 'Pound',
+      email: user.email,
+      name: user.name,
+      partnerEmail: partnerEmail,
+      partner: partner,
+      currency: currency,
     };
+
     try {
       const result = await UserService.signup(newUser);
       const { accessToken } = result;
       localStorage.setItem('accessToken', accessToken);
-      // setIsAuthenticated(true);
-      // setIsLoading(true);
+      setIsAuthenticated(true);
+      setIsLoading(true);
       authentication.login(() => navigate('/', { replace: true }));
     } catch (error) {
       alert(

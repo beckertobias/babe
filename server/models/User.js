@@ -5,7 +5,6 @@ const mongoose = require('.');
 const UserSchema = new mongoose.Schema({
   token: { type: String },
   email: { type: String, required: true },
-  password: { type: String },
   name: { type: String, required: true },
   partner: { type: String, required: true },
   partnerEmail: { type: String, required: true },
