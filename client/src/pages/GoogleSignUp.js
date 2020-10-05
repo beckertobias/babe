@@ -5,6 +5,7 @@ import { navigate } from '@reach/router';
 
 const GoogleSignUp = () => {
   const Auth = useContext(AuthContext);
+  console.log(Auth);
 
   const handleGoogleLogin = () => {
     const provider = new firebase.auth.GoogleAuthProvider();

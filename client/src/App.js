@@ -25,6 +25,8 @@ function App(props) {
   //GOOGLE AUTH STATE
   const [isLoggedIn, setLoggedIn] = useState(false);
 
+  //add primaryUser, add 2nd User,
+
   // SET STATE
   const currentAuthentication = authentication.isAuthenticated();
   const [isAuthenticated, setIsAuthenticated] = useState(currentAuthentication);
