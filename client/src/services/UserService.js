@@ -10,7 +10,7 @@ const fetchRequest = (path, options) => {
 const signup = newUser => {
   return fetchRequest('/sign-up', {
     method: 'POST',
-    // credentials: 'include',
+    credentials: 'include',
     mode: 'cors',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(newUser),

@@ -6,15 +6,15 @@ const SECRET_KEY = 'supercalifragilisticexpialidocious';
 
 const signup = async (req, res) => {
   const { email, password } = req.body;
-  const user = await User.findOne({ email: email });
-  if (user) {
-    res.status(409);
-    res.send({
-      error: '409',
-      message:
-        'There is an account already registered with this email. Please use a different email address or log in.',
-    });
-  }
+  // const user = await User.findOne({ email: email });
+  // if (user) {
+  //   res.status(409);
+  //   res.send({
+  //     error: '409',
+  //     message:
+  //       'There is an account already registered with this email. Please use a different email address or log in.',
+  //   });
+  // }
   const hash = await bcrypt.hash(password, 10);
   const newUser = new User({ ...req.body, password: hash });
   try {
