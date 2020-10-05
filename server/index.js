@@ -8,10 +8,10 @@ const app = express();
 const router = require('./router');
 const PORT = process.env.PORT || 3001;
 
-const config = {
-  origin: 'http://localhost:3000',
-  credentials: true,
-};
+// const config = {
+//   origin: 'http://localhost:3000',
+//   credentials: true,
+// };
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -19,7 +19,7 @@ db.once('open', () => {
   console.log('---> Connected to MongoDB 🚀'); //
 });
 
-app.use(cors(config));
+app.use(cors());
 app.use(express.json());
 app.use(router);
 

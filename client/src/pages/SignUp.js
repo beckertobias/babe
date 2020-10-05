@@ -17,9 +17,9 @@ import authentication from '../authentication';
 import { useSelector, useDispatch } from 'react-redux';
 
 const initialState = {
-  email: '',
-  password: '',
-  name: '',
+  // email: '',
+  // password: '',
+  // name: '',
   partner: '',
   partnerEmail: '',
   currency: '',
@@ -58,20 +58,27 @@ const SignUp = () => {
       partner,
       currency,
     });
-    // const newUser = { email, password, name, partner, partnerEmail, currency };
-    // try {
-    //   const result = await UserService.signup(newUser);
-    //   const { accessToken } = result;
-    //   localStorage.setItem('accessToken', accessToken);
-    //   setIsAuthenticated(true);
-    //   setIsLoading(true);
-    //   authentication.login(() => navigate('/', { replace: true }));
-    // } catch (error) {
-    //   alert(
-    //     `There is an account already registered with ${email}. Please use a different email address or log in.`,
-    //   );
-    //   setState(initialState);
-    // }
+    const newUser = {
+      email: 'tobias@gmail.com',
+      name: 'fwefe',
+      password: '45678fghjku09onf4',
+      partnerEmail: 'wifejnf@web.de',
+      partner: 'tyhjnhjuik',
+      currency: 'Pound',
+    };
+    try {
+      const result = await UserService.signup(newUser);
+      const { accessToken } = result;
+      localStorage.setItem('accessToken', accessToken);
+      // setIsAuthenticated(true);
+      // setIsLoading(true);
+      authentication.login(() => navigate('/', { replace: true }));
+    } catch (error) {
+      alert(
+        `There is an account already registered with ${user.email}. Please use a different email address or log in.`,
+      );
+      setState(initialState);
+    }
   };
 
   return (
