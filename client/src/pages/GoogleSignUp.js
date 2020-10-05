@@ -1,53 +1,45 @@
 import React, { useState, useContext } from 'react';
-import AuthContext from '../auth/auth';
 import * as firebase from 'firebase';
 import { navigate } from '@reach/router';
 
-const GoogleSignUp = () => {
-  const Auth = useContext(AuthContext);
-  console.log(Auth);
+//REDUX
+import { useSelector, useDispatch } from 'react-redux';
 
-  const handleGoogleLogin = () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
+// const signup = (user, dispatch) => {
+const handleGoogleLogin = (user, dispatch) => {
+  const provider = new firebase.auth.GoogleAuthProvider();
 
-    firebase
-      .auth()
-      .setPersistence(firebase.auth.Auth.Persistence.SESSION)
-      .then(() => {
-        firebase
-          .auth()
-          .signInWithPopup(provider)
-          .then(result => {
-            console.log(result);
-            // console.log(result.additionalUserInfo.profile);
-            // console.log(result.additionalUserInfo.profile.email);
-            // console.log(result.additionalUserInfo.profile.family_name);
-            // console.log(result.additionalUserInfo.profile.given_name);
-            Auth.setLoggedIn(true);
-            navigate('/sign-up', {
-              state: {
-                email: result.additionalUserInfo.profile.email,
-                name: result.additionalUserInfo.profile.given_name,
-              },
-              replace: true,
-            });
-          })
-          // .then(result => {
-          //   navigate('/sign-up', {
-          //     state: {
-          //       email: result.additionalUserInfo.profile.email,
-          //       name: result.additionalUserInfo.profile.given_name,
-          //     },
-          //     replace: true,
-          //   });
-          // })
-          .catch(e => console.log(e));
-      });
-  };
+  firebase
+    .auth()
+    .setPersistence(firebase.auth.Auth.Persistence.SESSION)
+    .then(() => {
+      firebase
+        .auth()
+        .signInWithPopup(provider)
+        .then(result => {
+          console.log(result);
+          dispatch({
+            type: 'ADD_FIRST_USER',
+            email: result.additionalUserInfo.profile.email,
+            name: result.additionalUserInfo.profile.given_name,
+          });
+          navigate('/sign-up', {
+            replace: true,
+          });
+        })
+        .catch(e => console.log(e));
+    });
+};
+
+function GoogleSignUp() {
+  const user = useSelector(state => state.user);
+  const dispatch = useDispatch();
+
+  console.log(user);
 
   return (
     <button
-      onClick={() => handleGoogleLogin()}
+      onClick={() => handleGoogleLogin(user, dispatch)}
       className="googleBtn"
       type="button"
     >
@@ -58,6 +50,6 @@ const GoogleSignUp = () => {
       Join With Google
     </button>
   );
-};
+}
 
 export default GoogleSignUp;

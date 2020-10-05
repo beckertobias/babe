@@ -16,17 +16,16 @@ import authentication from './authentication';
 import * as firebase from 'firebase';
 import firebaseConfig from './firebase/config';
 
-//AUTH CONTEXT
-import AuthContext from './auth/auth';
+//REDUX
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import reducer from './reducers/reducer';
 
 firebase.initializeApp(firebaseConfig);
 
+const store = createStore(reducer);
+
 function App(props) {
-  //GOOGLE AUTH STATE
-  const [isLoggedIn, setLoggedIn] = useState(false);
-
-  //add primaryUser, add 2nd User,
-
   // SET STATE
   const currentAuthentication = authentication.isAuthenticated();
   const [isAuthenticated, setIsAuthenticated] = useState(currentAuthentication);
@@ -45,9 +44,6 @@ function App(props) {
     overallLender: '',
   });
   const [isLoading, setIsLoading] = useState(false);
-
-  //AUTH
-  const { user, signOut, signInWithGoogle } = props;
 
   const retrieveUserInfo = async accessToken => {
     try {
@@ -101,12 +97,10 @@ function App(props) {
     isLoading,
     isAuthenticated,
   ]);
-  console.log(user);
 
   // LOAD MAIN PAGE LAYOUT
   return (
-    <AuthContext.Provider value={{ isLoggedIn, setLoggedIn }}>
-      Is logged in? {JSON.stringify(isLoggedIn)}
+    <Provider store={store}>
       <main>
         <Head />
         <Header />
@@ -128,7 +122,7 @@ function App(props) {
         )}
         <Footer isAuthenticated={isAuthenticated} />
       </main>
-    </AuthContext.Provider>
+    </Provider>
   );
 }
 

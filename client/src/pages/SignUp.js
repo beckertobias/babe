@@ -13,6 +13,9 @@ import {
 import UserService from '../services/UserService';
 import authentication from '../authentication';
 
+//REDUX
+import { useSelector, useDispatch } from 'react-redux';
+
 const initialState = {
   email: '',
   password: '',
@@ -22,12 +25,12 @@ const initialState = {
   currency: '',
 };
 
-const SignUp = ({ route }) => {
-  const { email } = route.params;
+const SignUp = () => {
+  //REDUX
+  const user = useSelector(state => state.user);
+  const dispatch = useDispatch();
 
-  console.log(email);
-  // console.log(route.params);
-  // console.log(route.params);
+  console.log(user);
 
   const [state, setState] = useState(initialState);
 
@@ -40,14 +43,21 @@ const SignUp = ({ route }) => {
   };
 
   const handleSubmit = async event => {
-    // event.preventDefault();
+    event.preventDefault();
     // // const { email, password } = state;
     // // try {
     // //   await signup(email, password);
     // // } catch (error) {
     // //   console.log(error);
     // // }
-    // const { email, password, name, partner, currency, partnerEmail } = state;
+    const { partner, currency, partnerEmail } = state;
+
+    dispatch({
+      type: 'ADD_PARTNER',
+      partnerEmail,
+      partner,
+      currency,
+    });
     // const newUser = { email, password, name, partner, partnerEmail, currency };
     // try {
     //   const result = await UserService.signup(newUser);
@@ -77,7 +87,7 @@ const SignUp = ({ route }) => {
       </h4>
       <br />
       <form onSubmit={handleSubmit}>
-        <FormSection>
+        {/* <FormSection>
           <FormLabel htmlFor="email">Email:</FormLabel>
           <FormInput
             type="text"
@@ -95,8 +105,8 @@ const SignUp = ({ route }) => {
             value={state.password}
             onChange={handleChange}
             required
-          />
-        </FormSection>
+          /> */}
+        {/* </FormSection> */}
         <FormSection onChange={handleChange}>
           <FormRadio type="radio" name="currency" value="£" required />
           <RadioLabel htmlFor="currency">
