@@ -17,9 +17,6 @@ import authentication from '../authentication';
 import { useSelector, useDispatch } from 'react-redux';
 
 const initialState = {
-  // email: '',
-  // password: '',
-  // name: '',
   partner: '',
   partnerEmail: '',
   currency: '',
@@ -29,6 +26,7 @@ const SignUp = ({ setIsAuthenticated, setIsLoading }) => {
   //REDUX
   const user = useSelector(state => state.user);
   const dispatch = useDispatch();
+  const auth = useSelector(state => state.auth);
 
   const [state, setState] = useState(initialState);
 
@@ -42,12 +40,6 @@ const SignUp = ({ setIsAuthenticated, setIsLoading }) => {
 
   const handleSubmit = async event => {
     event.preventDefault();
-    // // const { email, password } = state;
-    // // try {
-    // //   await signup(email, password);
-    // // } catch (error) {
-    // //   console.log(error);
-    // // }
     const { partner, currency, partnerEmail } = state;
 
     dispatch({
@@ -63,12 +55,15 @@ const SignUp = ({ setIsAuthenticated, setIsLoading }) => {
       partner: partner,
       currency: currency,
     };
-
     try {
       const result = await UserService.signup(newUser);
       const { accessToken } = result;
       localStorage.setItem('accessToken', accessToken);
-      setIsAuthenticated(true);
+      dispatch({
+        type: 'AUTH',
+        auth: true,
+      });
+      setIsAuthenticated(true); // TODO: refer to firebase
       setIsLoading(true);
       authentication.login(() => navigate('/', { replace: true }));
     } catch (error) {
@@ -92,26 +87,6 @@ const SignUp = ({ setIsAuthenticated, setIsLoading }) => {
       </h4>
       <br />
       <form onSubmit={handleSubmit}>
-        {/* <FormSection>
-          <FormLabel htmlFor="email">Email:</FormLabel>
-          <FormInput
-            type="text"
-            name="email"
-            value={state.email}
-            onChange={handleChange}
-            required
-          />
-        </FormSection>
-        <FormSection>
-          <FormLabel htmlFor="password">Password:</FormLabel>
-          <FormInput
-            type="password"
-            name="password"
-            value={state.password}
-            onChange={handleChange}
-            required
-          /> */}
-        {/* </FormSection> */}
         <FormSection onChange={handleChange}>
           <FormRadio type="radio" name="currency" value="£" required />
           <RadioLabel htmlFor="currency">

@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import * as firebase from 'firebase';
 import { navigate } from '@reach/router';
+import fire from '../firebase/config';
 
 //REDUX
 import { useSelector, useDispatch } from 'react-redux';
@@ -18,6 +19,7 @@ const handleGoogleLogin = (user, dispatch) => {
         .signInWithPopup(provider)
         .then(result => {
           console.log(result);
+          console.log(result.user);
           dispatch({
             type: 'ADD_FIRST_USER',
             email: result.additionalUserInfo.profile.email,
@@ -34,8 +36,6 @@ const handleGoogleLogin = (user, dispatch) => {
 function GoogleSignUp() {
   const user = useSelector(state => state.user);
   const dispatch = useDispatch();
-
-  console.log(user);
 
   return (
     <button

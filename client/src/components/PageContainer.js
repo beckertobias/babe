@@ -11,7 +11,7 @@ import CallItEven from '../pages/CallItEven';
 import SettleUp from '../pages/SettleUp';
 import History from '../pages/History';
 import Inspect from '../pages/Inspect';
-import Login from '../pages/Login';
+import Login from '../pages/GoogleLogin';
 import Logout from '../pages/Logout';
 import SignUp from '../pages/SignUp';
 import Settings from '../pages/Settings';

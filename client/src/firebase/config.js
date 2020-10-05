@@ -1,4 +1,4 @@
-import firebase from 'firebase';
+import * as firebase from 'firebase';
 
 const config = {
   apiKey: 'AIzaSyCjpOk4Z-6tRUe6RkecWQ_UNG5Qv2sh958',
@@ -7,4 +7,6 @@ const config = {
   storageBucket: 'legacy-project-babe.appspot.com',
 };
 
-export default config;
+firebase.initializeApp(config);
+
+export default firebase;

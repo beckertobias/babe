@@ -12,20 +12,15 @@ import TransactionService from './services/TransactionService';
 import UserService from './services/UserService';
 import authentication from './authentication';
 
-//FIREBASE
-import * as firebase from 'firebase';
-import firebaseConfig from './firebase/config';
-
 //REDUX
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import reducer from './reducers/reducer';
 
-firebase.initializeApp(firebaseConfig);
-
 const store = createStore(reducer);
 
 function App(props) {
+  // console.log(firebase.auth().currentUser);
   // SET STATE
   const currentAuthentication = authentication.isAuthenticated();
   const [isAuthenticated, setIsAuthenticated] = useState(currentAuthentication);

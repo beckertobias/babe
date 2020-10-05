@@ -19,7 +19,7 @@ const reducer = (state = initialState, action) => {
           currency: action.currency,
         },
       };
-    case 'AUTH':
+    case 'FIREBASE':
       return {
         ...state,
         auth: action.auth,
