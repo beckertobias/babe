@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import * as firebase from 'firebase';
 import { navigate } from '@reach/router';
 import fire from '../firebase/config';
+import uiConfig from '../firebase/firebaseui';
 
 //REDUX
 import { useSelector, useDispatch } from 'react-redux';
@@ -18,8 +19,6 @@ const handleGoogleLogin = (user, dispatch) => {
         .auth()
         .signInWithPopup(provider)
         .then(result => {
-          console.log(result);
-          console.log(result.user);
           dispatch({
             type: 'ADD_FIRST_USER',
             email: result.additionalUserInfo.profile.email,
