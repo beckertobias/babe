@@ -1,7 +1,6 @@
 const router = require('express').Router();
 const transactions = require('./controllers/transactions');
 const users = require('./controllers/users');
-const authenticateMe = require('./middleware/authentication');
 
 router.get('/', (req, res) => res.send(''));
 
@@ -15,8 +14,8 @@ router.put('/transactions/:_id', transactions.editTransaction);
 // USER METHODS
 router.post('/sign-up', users.signup);
 router.post('/login', users.login);
-router.get('/dashboard', authenticateMe, users.loadUserDetails);
-router.post('/logout', authenticateMe);
+router.get('/dashboard', users.loadUserDetails);
+//router.post('/logout');
 router.put('/:_id/:field', users.editUserDetails);
 
 module.exports = router;

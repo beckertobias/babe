@@ -9,6 +9,9 @@ import Lottie from 'react-lottie';
 import piggyBank from '../animations/piggy-bank.json';
 import confetti from '../animations/confetti.json';
 
+import * as firebase from 'firebase';
+import fire from '../firebase/config';
+
 const pig = {
   loop: false,
   autoplay: true,
@@ -27,15 +30,14 @@ const celebrate = {
   },
 };
 
-export default function Dashboard({
-  summary,
-  users,
-  currency,
-  isAuthenticated,
-}) {
+console.log('hir');
+const user = fire.auth().currentUser;
+console.log(user);
+
+export default function Dashboard({ summary, users, currency }) {
   return (
     <MainView>
-      {isAuthenticated ? (
+      {fire.auth().currentUser ? (
         <React.Fragment>
           <DashSummary>
             {summary.totalOwed > 0 ? (

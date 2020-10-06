@@ -8,16 +8,24 @@ import {
   FormButton,
 } from '../theme';
 
-import UserService from '../services/UserService';
-import authentication from '../authentication';
-
 import firebase from '../firebase/config';
 
-import * as firebaseui from 'firebaseui';
+import UserService from '../services/UserService';
 
 const initialState = {
   email: '',
   password: '',
+};
+
+const handleSubmit = async email => {
+  const user = { email };
+  const result = await UserService.login(user);
+  try {
+    const { accessToken } = result;
+    localStorage.setItem('accessToken', accessToken);
+  } catch (error) {
+    alert('Your email or password is incorrect. Please try again.');
+  }
 };
 
 const handleGoogleLogin = e => {
@@ -31,9 +39,8 @@ const handleGoogleLogin = e => {
       firebase
         .auth()
         .signInWithPopup(provider)
+        .then(result => handleSubmit(result.additionalUserInfo.profile.email))
         .then(result => {
-          console.log(result);
-          console.log(result.user);
           navigate('/dashboard', {
             replace: true,
           });
@@ -41,33 +48,6 @@ const handleGoogleLogin = e => {
         .catch(e => console.log(e));
     });
 };
-
-//   try {
-//     console.log('google');
-//     const uiConfig = {
-//       signInSuccessUrl: '<http://localhost:3000/dashboard>',
-//       signInOptions: [
-//         // Leave the lines as is for the providers you want to offer your users.
-//         firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-//       ],
-//       //tosUrl and privacyPolicyUrl accept either url string or a callback
-//       //function.
-//       //Terms of service url/callback.
-//       tosUrl: '<your-tos-url>',
-//       //Privacy policy url/callback.
-//       privacyPolicyUrl: function () {
-//         window.location.assign('<your-privacy-policy-url>');
-//       },
-//     };
-
-//     // Initialize the FirebaseUI Widget using Firebase.
-//     var ui = new firebaseui.auth.AuthUI(firebase.auth());
-//     // The start method will wait until the DOM is loaded.
-//     ui.start('#firebaseui-auth-container', uiConfig);
-//   } catch (e) {
-//     console.log(e);
-//   }
-// };
 
 const Login = ({ setIsAuthenticated, setIsLoading }) => {
   const [state, setState] = useState(initialState);
@@ -80,23 +60,6 @@ const Login = ({ setIsAuthenticated, setIsLoading }) => {
       [name]: value,
     }));
   };
-
-  // const handleSubmit = async event => {
-  //   event.preventDefault();
-  //   const { email } = state;
-  //   const user = { email };
-  //   const result = await UserService.login(user);
-  //   try {
-  //     const { accessToken } = result;
-  //     localStorage.setItem('accessToken', accessToken);
-  //     setIsAuthenticated(true);
-  //     setIsLoading(true);
-  //     authentication.login(() => navigate('/', { replace: true }));
-  //   } catch (error) {
-  //     alert('Your email or password is incorrect. Please try again.');
-  //     setState(initialState);
-  //   }
-  // };
 
   return (
     <MainViewStatic>
