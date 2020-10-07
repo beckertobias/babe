@@ -36,7 +36,7 @@ const About = () => {
         <h2> It&apos;s for folks with shared lives and sole bank accounts.</h2>
         <br />
 
-        <h5>
+        <h5 data-testid="babe-description">
           Users get a simple balance, saying which person is owed money overall.
         </h5>
         <h5>

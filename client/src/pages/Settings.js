@@ -65,6 +65,7 @@ const Settings = ({ users, setUsers, currency, setCurrency, setIsLoading }) => {
           <FormInput
             type="text"
             name="user-lead"
+            data-testid="user-lead"
             value={tempUser}
             onChange={event => setTempUser(event.target.value)}
           />
@@ -74,6 +75,7 @@ const Settings = ({ users, setUsers, currency, setCurrency, setIsLoading }) => {
           <FormInput
             type="text"
             name="user-partner"
+            data-testid="user-partner"
             value={tempPartner}
             onChange={event => setTempPartner(event.target.value)}
           />
@@ -82,6 +84,7 @@ const Settings = ({ users, setUsers, currency, setCurrency, setIsLoading }) => {
           <FormRadio
             type="radio"
             name="currency"
+            data-testid="currency"
             value="£"
             required
             defaultChecked={currency === '£' ? 'true' : null}
