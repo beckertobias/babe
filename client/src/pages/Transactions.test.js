@@ -34,7 +34,7 @@ test('renders partner username', () => {
   expect(container.textContent).toMatch('user2');
 });
 
-test('test', () => {
+test('user can input and save transaction', () => {
   const setIsLoading = jest.fn();
   const setTransactions = jest.fn(transaction => transaction);
   render(
