@@ -64,10 +64,12 @@ const Transactions = ({
       </h4>
       <form onSubmit={submit}>
         <FormSection>
-          <FormLabel htmlFor="bill-item">What is it for?</FormLabel>
+          <FormLabel htmlFor="billItem">What is it for?</FormLabel>
           <FormInput
             type="text"
-            name="bill-item"
+            name="billItem"
+            data-testid="billItem"
+            id="billItem"
             placeholder="Pints with Gesh 🍻"
             onChange={event => setItem(event.target.value)}
             value={item}
@@ -75,14 +77,16 @@ const Transactions = ({
           />
         </FormSection>
         <FormSection>
-          <FormLabel htmlFor="bill-amount">How much?</FormLabel>
+          <FormLabel htmlFor="billAmount">How much?</FormLabel>
           <span>{currency}</span>
           <FormInput
             type="number"
             min="0"
             step="0.01"
             placeholder="18.50"
-            name="bill-amount"
+            name="billAmount"
+            data-testid="billAmount"
+            id="billAmount"
             onChange={event => setAmount(event.target.value)}
             value={amount}
             required
@@ -91,44 +95,45 @@ const Transactions = ({
         <FormSection onChange={event => setLender(event.target.value)}>
           <FormRadio
             type="radio"
-            name="bill-lender"
+            name="billLender"
             value={users.leadEmail}
             required
           />
-          <FormLabel htmlFor="bill-lender">I paid</FormLabel>
+          <FormLabel htmlFor="billLender">I paid</FormLabel>
           <FormRadio
             type="radio"
-            name="bill-lender"
+            name="billLender"
+            id="billLender"
             value={users.partnerEmail}
           />
-          <FormLabel htmlFor="bill-lender">{users.partner} paid</FormLabel>
+          <FormLabel htmlFor="billLender">{users.partner} paid</FormLabel>
         </FormSection>
         <FormSection>
           <FormRadio
             type="radio"
-            name="bill-split"
+            name="billSplit"
             value={false}
             onChange={() => setIsCustomising(!isCustomising)}
             defaultChecked
             required
           />
-          <FormLabel htmlFor="bill-lender">Half each</FormLabel>
+          <FormLabel htmlFor="billLender">Half each</FormLabel>
           <FormRadio
             type="radio"
-            name="bill-split"
+            name="billSplit"
             value={true}
             onChange={() => setIsCustomising(!isCustomising)}
           />
-          <FormLabel htmlFor="bill-lender">Customise</FormLabel>
+          <FormLabel htmlFor="billLender">Customise</FormLabel>
         </FormSection>
         {isCustomising && (
           <FormSection>
-            <SliderLabel htmlFor="bill-proportion">
+            <SliderLabel htmlFor="billProportion">
               {split}% mine, {100 - split}% {users.partner}&apos;s
             </SliderLabel>
             <FormSlider
               type="range"
-              name="bill-proportion"
+              name="billProportion"
               min="0"
               max="100"
               step="10"
